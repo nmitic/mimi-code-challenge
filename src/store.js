@@ -20,6 +20,8 @@ class PopularArtistStore {
     switch (dataType) {
 
       case 'artists':
+        this.loadingArtists = true;
+
         getArtistsList({
           page: this.currentArtistPage
         })
@@ -27,6 +29,8 @@ class PopularArtistStore {
       break;
 
       case 'tracks':
+        this.loadingTracks = true;
+      
         getTracksList({
           artist: this.currentArtist,
           page: this.currentPageTracks
@@ -43,6 +47,8 @@ class PopularArtistStore {
       break;
 
       case 'tracksAppend':
+        this.loadingTracks = true;
+      
         getTracksList({
           artist: this.currentArtist,
           page: this.currentPageTracks
@@ -56,11 +62,13 @@ class PopularArtistStore {
   @action fetchArtistSuccess = (data) => {
     this.currentArtistPage += 1;
     this.artists = [...this.artists, ...data];
+    this.loadingArtists = false;
   }
 
   @action fetchTracksSuccess = (data) => {
     this.currentPageTracks += 1;    
     this.tracks = data;
+    this.loadingTracks = false;
   }
 
   @action fetchTrackSuccess = (data) => {
@@ -70,6 +78,7 @@ class PopularArtistStore {
   @action fetchTracksAppendSuccess = (data) => {
     this.currentPageTracks += 1;  
     this.tracks = [...this.tracks, ...data]
+    this.loadingTracks = false;    
   }
 }
 

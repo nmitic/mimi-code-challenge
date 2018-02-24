@@ -17,12 +17,14 @@ import { observer } from 'mobx-react';
           trackData={this.props.store.track} 
           switchSong={this.switchSong}
           loadMoreTracks={this.infinitScrollTracks}
+          isLoading={this.props.store.loadingTracks}          
         />
         
         <ArtistList 
           data={this.props.store.artists} 
           switchArtist={this.switchArtist}
           loadMoreArtist={this.infinitScroll}
+          isLoading={this.props.store.loadingArtists}
         />
 
       </div>
@@ -46,16 +48,19 @@ import { observer } from 'mobx-react';
   }
 
   infinitScroll = (e) => {
-    const scrolledAllTheWay = e.currentTarget.scrollHeight - e.currentTarget.scrollTop  === e.currentTarget.clientHeight - 100;
-    if (scrolledAllTheWay) {
+    const scrolledAllTheWay = e.currentTarget.scrollHeight - e.currentTarget.scrollTop  === e.currentTarget.clientHeight;
+    const isLoading = this.props.store.loadingArtists;
+    
+    if (scrolledAllTheWay && !isLoading) {
       this.props.store.fetchData('artists');
     }
   }
 
   infinitScrollTracks = (e) => {
     const scrolledAllTheWay = e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight;
-
-    if (scrolledAllTheWay) {
+    const isLoading = this.props.store.loadingTracks;
+    
+    if (scrolledAllTheWay && !isLoading) {
       this.props.store.fetchData('tracksAppend');      
     }
   }

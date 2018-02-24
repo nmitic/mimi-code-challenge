@@ -5,7 +5,8 @@ import './ArtistList.scss';
 const ArtistList = ({
   data,
   switchArtist,
-  loadMoreArtist
+  loadMoreArtist,
+  isLoading
 }) => {
   return (
     <div className="artists-list list" onScroll={loadMoreArtist}>
@@ -17,6 +18,12 @@ const ArtistList = ({
             key={artist.userId}            
           /> )
       }
+
+      <div className="loading-pulser">
+          {
+            isLoading && '...loading'
+          }
+      </div>
     </div>
   )
 }

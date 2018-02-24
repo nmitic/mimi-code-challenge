@@ -7,12 +7,13 @@ const TracksList = ({
   data,
   trackData,
   switchSong,
-  loadMoreTracks
+  loadMoreTracks,
+  isLoading
 }) => {
   return (
     <div className="track-list list">
       <TrackPlayer data={trackData}/>
-      <div className="track-list__tracks" onScroll={loadMoreTracks}>      
+      <div className="track-list__tracks" onScroll={loadMoreTracks}>    
         {
           data.map((track, index) => 
             <Track
@@ -23,7 +24,12 @@ const TracksList = ({
               index={index}
             /> )
         } 
-      </div>      
+      </div>
+      <div className="loading-pulser">
+        {
+          isLoading && '...loading'
+        }
+      </div>     
     </div>
   )
 }
