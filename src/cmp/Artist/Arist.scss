@@ -1,0 +1,17 @@
+.artists-list {
+  &__image {
+    width: 80px;
+    height: 80px;
+  }
+  &__info {
+    display: block;
+  }
+
+  &__artist {
+    padding: 10px;
+    cursor: pointer;      
+    &:hover {
+      box-shadow: inset 0px 0px 0px 2px rgba(0,0,0,1);
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.track-list__track {
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  cursor: pointer;      
+  &:hover {
+    box-shadow: inset 0px 0px 0px 2px rgba(0,0,0,1);
+  }
+}

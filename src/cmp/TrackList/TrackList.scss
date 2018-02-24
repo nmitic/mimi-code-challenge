@@ -1,0 +1,9 @@
+.track-list {
+  position: relative;
+  width: 70%;
+
+  &__tracks {
+    height: 65vh;
+    overflow-y: scroll;
+  }
+}
