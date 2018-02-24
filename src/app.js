@@ -5,58 +5,22 @@ import './app.scss';
 import ArtistList from './cmp/ArtistList/ArtistList';
 import TracksList from './cmp/TrackList/TrackList';
 
-const compose = (...functions) => data =>
-  functions.reduceRight((value, func) => func(value), data)
+import store from './store';
+import { observer } from 'mobx-react';
 
-const pipe = (...functions) => data =>
-  functions.reduce((value, func) => func(value), data)
-
-const endPoint = {
-  artistList: page => `http://localhost:3000/popularArtist?_page=${page}&_limit=20`,
-  trackList: params => `https://api-v2.hearthis.at/${params.artist}/?type=tracks&page=${params.page}&count=20`,
-  track: params => `https://api-v2.hearthis.at/${params.artist}/${params.title}/`
-}
-
-const getData = async (endPoint) => {
-  const response = await fetch(endPoint);
-  const data = await response.json();
-  
-  return data;
-}
-
-const getArtistsList = compose(getData, endPoint.artistList);
-const getTracksList = compose(getData, endPoint.trackList);
-const getTrack = compose(getData, endPoint.track);
-
-
-class App extends Component {
-  state = {
-    artists: [],
-    tracks: [],
-    track: {},
-    
-    currentTrack: '',
-    currentArtist: '',
-    currentPageArtist: 1,
-    currentPageTracks: 1,
-
-    loadingTracks: false,
-    loadingArtists: false
-  }
-
+@observer class App extends Component {
   render = () => {
     return (
       <div className="app-container">
-
         <TracksList 
-          data={this.state.tracks} 
-          trackData={this.state.track} 
+          data={this.props.store.tracks} 
+          trackData={this.props.store.track} 
           switchSong={this.switchSong}
           loadMoreTracks={this.infinitScrollTracks}
         />
         
         <ArtistList 
-          data={this.state.artists} 
+          data={this.props.store.artists} 
           switchArtist={this.switchArtist}
           loadMoreArtist={this.infinitScroll}
         />
@@ -65,111 +29,43 @@ class App extends Component {
     )
   }
 
-  loadMoreArtist = (page) => {
-    getArtistsList(page)
-      .then(data => {
-        this.setState((prevState, props) => {
-          return {
-            artists: [...prevState.artists, ...data]
-          }
-        })
-      });
-  }
-
   switchArtist = (e) => {
     const permalink = e.currentTarget.dataset.permalink;
 
-    this.setState((prevState, props) => {
-      return {
-        currentArtist: permalink,
-        scurrentPageTracks: 1 
-      }
-    }, () => {
-      getTracksList({
-        artist: this.state.currentArtist,
-        page: this.state.currentPageTracks
-      })
-      .then(data => {
-        this.setState((prevState, props) => {
-          return {
-            tracks: data
-          }
-        })
-      });      
-    })
+    this.props.store.currentArtist = permalink;
+    this.props.store.currentPageTracks = 1;
+
+    this.props.store.fetchData('tracks');
   }
 
   switchSong = (e) => {
     const permalink = e.currentTarget.dataset.permalink;
+    this.props.store.currentTrack = permalink;
 
-    this.setState((prevState, props) => {
-      return {
-        currentTrack: permalink
-      }
-    }, () => {
-      getTrack({
-        artist: this.state.currentArtist,
-        title: this.state.currentTrack
-      })
-      .then(data => {
-        this.setState((prevState, props) => {
-          return {
-            track: data
-          }
-        })
-      });      
-    })
-  }
-
-  loadMoreTracks = () => {
-    getTracksList({
-      artist: this.state.currentArtist,
-      page: this.state.currentPageTracks
-    })
-    .then(data => {
-      this.setState((prevState, props) => {
-        return {
-          tracks: [...prevState.tracks, ...data]
-        }
-      })
-    }); 
+    this.props.store.fetchData('track');
   }
 
   infinitScroll = (e) => {
-    const scrolledAllTheWay = e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight;
-
+    const scrolledAllTheWay = e.currentTarget.scrollHeight - e.currentTarget.scrollTop  === e.currentTarget.clientHeight - 100;
     if (scrolledAllTheWay) {
-      this.setState((prevState, props) => {
-        return {
-          currentPageArtist: prevState.currentPageArtist + 1
-        }
-      }, () => {
-        console.log(this.state.currentPageArtist)
-        this.loadMoreArtist(this.state.currentPageArtist);
-      })
+      this.props.store.fetchData('artists');
     }
   }
 
   infinitScrollTracks = (e) => {
     const scrolledAllTheWay = e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight;
+
     if (scrolledAllTheWay) {
-      this.setState((prevState, props) => {
-        return {
-          currentPageTracks: prevState.currentPageTracks + 1
-        }
-      }, () => {
-        console.log(this.state.currentPageTracks)
-        this.loadMoreTracks();
-      })
+      this.props.store.fetchData('tracksAppend');      
     }
   }
 
   componentDidMount = () => {
-    this.loadMoreArtist(this.state.currentPageArtist);
+    this.props.store.fetchData('artists');
   }
 }
 
 ReactDOM.render(
-  <App />,
+  <App store={store} />,
   document.getElementById('app')
 )
