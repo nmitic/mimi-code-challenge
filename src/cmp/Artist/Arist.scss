@@ -1,13 +1,25 @@
 .artists-list__artist {
   display: flex;
+  flex-direction: column;
 
+  @media (min-width: 600px) {
+    display: block;
+    flex-direction: row;
+  }
   &__image {
     width: 80px;
     height: 80px;
     margin-right: 10px;
   }
   &__info {
-    display: block;
+    &:first-child {
+      display: block;
+    } 
+    display: none;
+    
+    @media (min-width: 600px) {
+      display: block
+    }
   }
 
   padding: 10px;

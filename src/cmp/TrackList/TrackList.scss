@@ -1,9 +1,13 @@
 .track-list {
   position: relative;
-  width: 50%;
+  width: 70%;
 
   &__tracks {
     height: 65vh;
     overflow-y: scroll;
+  }
+
+  @media (min-width: 600px) {
+    width: 50%;      
   }
 }

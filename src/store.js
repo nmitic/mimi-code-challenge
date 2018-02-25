@@ -33,7 +33,7 @@ class PopularArtistStore {
       
         getTracksList({
           artist: this.currentArtist,
-          page: this.currentPageTracks
+          page: 1
         })
           .then(this.fetchTracksSuccess, this.fetchTracksError)
       break;
