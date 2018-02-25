@@ -11,14 +11,16 @@ const Artist = ({
       onClick={handleClick}
       data-permalink={data.artistData.permalink}
     >
+      <img src={data.artistData.avatar_url} className="artists-list__artist__image"/>
+      <div>
+        <small className="artists-list__artist__info">Name: {data.artistData.username}</small>      
+        <small className="artists-list__artist__info">Track Count: {data.artistData.track_count}</small>
+        <small className="artists-list__artist__info">Download Count: {data.downloadCount}</small>      
+        <small className="artists-list__artist__info">Likes Count: {data.artistData.likes_count}</small>
+        <small className="artists-list__artist__info">Fallowers Count: {data.artistData.followers_count}</small>
+        <small className="artists-list__artist__info">From: {data.artistData.geo}</small> 
+      </div>
 
-      <h1>{data.artistData.username}</h1>
-      <img src={data.artistData.avatar_url} className="artists-list__image"/>
-      <small className="artists-list__info">Track Count: {data.artistData.track_count}</small>
-      <small className="artists-list__info">Download Count: {data.downloadCount}</small>      
-      <small className="artists-list__info">Likes Count: {data.artistData.likes_count}</small>
-      <small className="artists-list__info">Fallowers Count: {data.artistData.followers_count}</small>
-      <small className="artists-list__info">From: {data.artistData.geo}</small>
     </div>
   )
 }

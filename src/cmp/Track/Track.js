@@ -9,7 +9,7 @@ const Track = ({
 }) => {
   return (
     <div className="track-list__track" data-permalink={permalink} onClick={handleClick}>
-      {index + 1}: {name}
+      <small className="track-list__track__number">{index + 1}:</small> {name}
     </div>    
   )
 }
