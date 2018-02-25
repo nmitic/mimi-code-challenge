@@ -9,3 +9,5 @@ Since there is no endPoint for popular Artist I made small nodeJS script to hand
 This should be done on the backend, since API does not provide with the right data for this small app "needs" there sholudn't be any kind of heavy fetching, calculating and sorting on the frontend.
 
 The "popular artist" data is sorted per download count of each song of the respective Artist. This was intention, since the rules was to get data from "popular tracks" endPoint.
+
+Error handling is not covered, during the development I noticed that API can sometimes be really slow or non responsive, it might happen that you will need to run scripts more then one time :) 
