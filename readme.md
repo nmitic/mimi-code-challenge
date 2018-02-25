@@ -1,7 +1,8 @@
 How to start the project
-1. Run: npm run popular-artists
-2. Open new terminal tab
-3. Run: npm run dev
+1. Run: npm install
+2. Run: npm run popular-artists
+3. Open new terminal tab
+4. Run: npm run dev
 
 Notes
 Since there is no endPoint for popular Artist I made small nodeJS script to handle this and serve the data via json-serve.
