@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "dev": "webpack-dev-server --open",
-    "json-serve": "json-server --watch ./data/data.json",
-    "popular-artists": "node ./data/popular-artists.js && json-server --watch ./data/data.json"
+    "json-serve": "json-server --watch ./popularArtistData/data.json",
+    "popular-artists": "node ./popularArtistData/popular-artists.js && json-server --watch ./popularArtistData/data.json"
   },
   "author": "Nikola Mitic",
   "license": "ISC",

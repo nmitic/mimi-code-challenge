@@ -55,7 +55,7 @@ const storeData = (arr) => {
   
   fs.writeFile(dataFile, JSON.stringify(data), (err) => {
     if (err) throw err;
-    console.log(chalk.green(('Artists are saved, data ready to be consumed, yeah!!!')));
+    console.log(chalk.green(('Artists are saved, data ready to be consumed, yeah!!! Open new terminal tab and run : npm run dev')));
   });
 };
 
